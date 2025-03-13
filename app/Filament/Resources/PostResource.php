@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Category;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -36,17 +37,23 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->required(),
-                TextInput::make('slug')->required(),
-                Select::make('category_id')
-    ->options(fn() => Category::pluck('name', 'id'))
-    ->required(),
-                ColorPicker::make('color')->required(),
-                MarkdownEditor::make('content')->required(),
+                Section::make('Create A Post ')
+                ->description('Create a post here')
+                
+                ->schema([
+                    TextInput::make('title')->required(),
+                    TextInput::make('slug')->required(),
+                    Select::make('category_id')
+                        ->options(fn() => Category::pluck('name', 'id'))
+                        ->required(),
+                    ColorPicker::make('color')->required(),
+                    MarkdownEditor::make('content')->required(),
+                ])->columnSpanFull(),
+
                 FileUpload::make('thumbnail')->disk('public')->directory('thumbnails'),
                 TagsInput::make('tags')->required(),
                 Checkbox::make('published')->required()
-            ]);
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
