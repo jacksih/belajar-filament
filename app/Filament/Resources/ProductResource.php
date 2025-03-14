@@ -13,6 +13,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use App\Filament\Exports\ProductExporter;
+use Filament\Tables\Actions\ExportAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -92,6 +94,10 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(ProductExporter::class)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
