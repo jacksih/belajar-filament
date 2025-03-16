@@ -7,6 +7,7 @@ use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 
+
 class ProductImporter extends Importer
 {
     protected static ?string $model = Product::class;
@@ -14,7 +15,21 @@ class ProductImporter extends Importer
     public static function getColumns(): array
     {
         return [
-            //
+            ImportColumn::make('name')
+            ->requiredMapping()
+            ->rules(['required', 'max:255']),
+            ImportColumn::make('description')
+            ->requiredMapping()
+            ->rules(['max:65535']),
+            ImportColumn::make('price')
+            ->requiredMapping()
+            ->rules(['required', 'numeric']),
+            ImportColumn::make('stock')
+            ->requiredMapping()
+            ->rules(['required', 'numeric']),
+            ImportColumn::make('metadata')
+            ->array(','),
+
         ];
     }
 

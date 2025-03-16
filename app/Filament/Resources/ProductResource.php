@@ -14,13 +14,15 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use App\Filament\Exports\ProductExporter;
+use App\Filament\Imports\ProductImporter;
 use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ImportAction;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProductResource\RelationManagers;
-use Filament\Actions\Exports\Enums\ExportFormat;
 
 class ProductResource extends Resource
 {
@@ -103,7 +105,9 @@ class ProductResource extends Resource
                     ->formats([
                         ExportFormat::Csv,
                         ExportFormat::Xlsx,
-                    ])
+                    ]),
+                ImportAction::make()
+                    ->importer(ProductImporter::class)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
