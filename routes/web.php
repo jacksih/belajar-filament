@@ -5,8 +5,9 @@ use App\Http\Controllers\ProductController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin/login');
 });
+
 
 
 Route::get('/test', [ProductController::class, 'index']);

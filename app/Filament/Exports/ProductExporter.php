@@ -18,11 +18,9 @@ class ProductExporter extends Exporter
             ExportColumn::make('description'),
             ExportColumn::make('price'),
             ExportColumn::make('stock'),
-            // ExportColumn::make('metadata', function (Product $product) {
-            //     return $product->metadata->map(function ($metadata) {
-            //         return $metadata->only(['name', 'role']);
-            //     });
-            // }),
+
+            ExportColumn::make('metadata')
+                ->listAsJson(),
         ];
     }
 

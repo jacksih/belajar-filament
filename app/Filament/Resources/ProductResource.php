@@ -16,9 +16,11 @@ use Filament\Forms\Components\TextInput;
 use App\Filament\Exports\ProductExporter;
 use Filament\Tables\Actions\ExportAction;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ExportBulkAction;
 use App\Filament\Resources\ProductResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use Filament\Actions\Exports\Enums\ExportFormat;
 
 class ProductResource extends Resource
 {
@@ -98,11 +100,16 @@ class ProductResource extends Resource
             ->headerActions([
                 ExportAction::make()
                     ->exporter(ProductExporter::class)
+                    ->formats([
+                        ExportFormat::Csv,
+                        ExportFormat::Xlsx,
+                    ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make()->exporter(ProductExporter::class),
             ]);
     }
 
